@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+	<header th:replace="layout/layout :: header"></header>
+	
+	<div class="container-fluid">
+		<h3 th:text="${titulo}" class="text-center mt-5 mb-5">title</h3>
+
+		<p th:if="${autores.isEmpty()}" th:text="'No hay autores para mostrar'"></p>
+
+		<div class="row d-flex justify-content-center">
+			<div class="col-12 mx-auto">
+				<table th:if="${!autores.isEmpty()}"
+					class="table table-striped text-center table-bordered">
+					<thead>
+						<tr>
+							<th>Id</th>
+							<th>Nombre</th>
+							<th>Nacionalidad</th>
+							<th>Editar</th>
+							<th>Eliminar</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="autor : ${autores}">
+							<td th:text="${autor.id}">Id</td>
+							<td th:text="${autor.nombre}">Nombre</td>
+							<td th:text="${autor.nacionalidad}">Nacionalidad</td>
+							<td><a
+								class="btn btn-outline-warning"
+								th:href="@{/form/} + ${autor.id}"> Editar </a></td>
+							<td><a
+								class="btn btn-outline-danger"
+								th:href="@{/eliminar/} + ${autor.id}" th:text="'Eliminar'">
+								Eliminar </a></td>
+						</tr>
+					</tbody>
+				</table>
+
+				<nav th:replace="paginator-nav :: paginator"></nav>
+
+			</div>
+		</div>
+		<!-- row -->
+
+	</div>
+	
+	<footer th:replace="layout/layout :: footer"></footer>
+	
+</body>
+</html>
