@@ -34,4 +34,9 @@ public class PrestamoServiceImpl implements IPrestamoService {
 		prestamoDao.deleteById(id);
 	}
 
+	@Override
+	public Prestamo findPrestamoByIdWithLibros(Long id) {
+		return prestamoDao.fetchByIdWithLibros(id);
+	}
+
 }

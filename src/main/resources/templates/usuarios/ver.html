@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+	<header th:replace="layout/layout :: header"></header>
+
+	<div class="container-fluid">
+		<h3 th:text="${titulo}" class="text-center mt-5 mb-5">title</h3>
+
+		<div class="card">
+			<div class="card-body">
+				<ul class="list-group">
+					<li class="list-group-item" th:text="${usuario.nombre}"></li>
+					<li class="list-group-item" th:text="${usuario.correo}"></li>
+					<li class="list-group-item" th:text="${usuario.direccion}"></li>
+				</ul>
+			</div>
+			<div class="card-footer">
+				<p th:if="${#lists.isEmpty(usuario.prestamos)}"
+					class="alert alert-info m-4"
+					th:text="'No hay prestamos asignados para el usuario ' + ${usuario.nombre}">
+				</p>
+
+				<table th:if="${not #lists.isEmpty(usuario.prestamos)}"
+					class="table table-bordered table-striped my-4">
+					<thead class="thead-dark">
+						<tr>
+							<th>#</th>
+							<th>Fecha Prestamo</th>
+							<th>Fecha Devolución</th>
+							<th>Devuelto</th>
+							<th>Detalle Prestamo</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="prestamo : ${usuario.prestamos}">
+							<td th:text="${prestamo.id}"></td>
+							<td th:text="${prestamo.fechaPrestamo}"></td>
+							<td th:text="${prestamo.fechaDevolucion}"></td>
+							<td th:text="${prestamo.devuelto}"></td>
+							<td>
+								<a class="btn btn-primary" th:text="'Detalle Prestamo'"
+								th:href="@{'/prestamo/detalle/' +${prestamo.id}}"></a>
+							</td>
+						</tr>
+					</tbody>
+					<!-- <tfooter>
+						<tr th:each="item : ${prestamo}">
+							<td th:text="${item.id}"></td>
+							<td th:text="${item.libro.titulo}"></td>
+						</tr>
+					</tfooter> -->
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

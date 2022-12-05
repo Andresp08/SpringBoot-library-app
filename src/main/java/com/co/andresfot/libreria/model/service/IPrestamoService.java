@@ -12,6 +12,8 @@ public interface IPrestamoService {
 	public void save(Prestamo prestamo);
 
 	public Prestamo findOne(Long id);
+	
+	public Prestamo findPrestamoByIdWithLibros(Long id);
 
 	public void delete(Long id);
 
