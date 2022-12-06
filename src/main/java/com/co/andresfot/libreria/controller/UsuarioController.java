@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.co.andresfot.libreria.model.entity.Prestamo;
 import com.co.andresfot.libreria.model.entity.Usuario;
 import com.co.andresfot.libreria.model.service.IPrestamoService;
 import com.co.andresfot.libreria.model.service.IUsuarioService;
@@ -47,8 +46,6 @@ public class UsuarioController {
 	public String verUsuario(@PathVariable(value = "id") Long id, Model model) {
 		
 		Usuario usuario = usuarioService.fetchByIdWithPrestamos(id);
-		
-		//Prestamo prestamo = prestamoService.findPrestamoByIdWithLibros(id);
 		
 		if(usuario == null) {
 			return "redirect:/lista-usuarios";

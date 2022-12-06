@@ -104,5 +104,19 @@ public class Prestamo implements Serializable{
 	public void setLibro(Libro libro) {
 		this.libro = libro;
 	}
+	
+	/*public void storageValues() {
+		if(devuelto) {
+			setDevuelto(1);
+		} else (devuelto) {
+			setDevuelto(2);
+		}
+	}*/
+
+	@Override
+	public String toString() {
+		return "Prestamo [id=" + id + ", fechaPres=" + fechaPrestamo + ", fechaDev=" + fechaDevolucion + ", devuelto=" + devuelto
+				+ ", usuario=" + usuario.getNombre() + ", libro=" + libro.getTitulo() + "]";
+	}
 
 }
