@@ -4,7 +4,7 @@
 <body>
 	<header th:replace="layout/layout :: header"></header>
 
-	<div class="container-fluid">
+	<div class="container">
 		<h3 th:text="${titulo}" class="text-center mt-5 mb-5">title</h3>
 
 		<p th:if="${usuarios.isEmpty()}" th:text="'No hay usuarios para mostrar'"></p>
@@ -15,7 +15,7 @@
 					class="table table-striped text-center table-bordered">
 					<thead>
 						<tr>
-							<th>Id</th>
+							<th>#</th>
 							<th>Nombre</th>
 							<th>Dirección</th>
 							<th>Correo</th>

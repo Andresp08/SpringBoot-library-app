@@ -3,6 +3,8 @@
 <head th:replace="layout/layout :: head"></head>
 <body>
 	<header th:replace="layout/layout :: header"></header>
+	
+	<h3 th:text="${titulo}" class="text-center my-3"></h3>
 
 	<div class="col-8 mx-auto my-5">
 		<form th:action="@{/prestamos/guardar-prestamo}" th:object="${prestamo}" method="POST">
@@ -51,6 +53,8 @@
 			<button type="submit" class="btn btn-primary">Realizar Prestamo</button>
 		</form>
 	</div>
+
+	<footer th:replace="layout/layout :: footer"></footer>
 
 </body>
 </html>

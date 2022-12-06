@@ -4,18 +4,22 @@
 <body>
 	<header th:replace="layout/layout :: header"></header>
 	
-	<div class="container-fluid">
+	<div class="container">
 		<h3 th:text="${titulo}" class="text-center mt-5 mb-5">title</h3>
+		
+		<div class="d-flex justify-content-end mb-2">
+			<a th:href="@{/autores/crear-autor}" class="btn btn-outline-success">Nuevo autor</a>
+		</div>
 
 		<p th:if="${autores.isEmpty()}" th:text="'No hay autores para mostrar'"></p>
 
 		<div class="row d-flex justify-content-center">
 			<div class="col-12 mx-auto">
 				<table th:if="${!autores.isEmpty()}"
-					class="table table-striped text-center table-bordered">
+					class="table table-striped text-center table-bordered mb-4">
 					<thead>
 						<tr>
-							<th>Id</th>
+							<th>#</th>
 							<th>Nombre</th>
 							<th>Nacionalidad</th>
 							<th>Editar</th>
@@ -29,7 +33,7 @@
 							<td th:text="${autor.nacionalidad}">Nacionalidad</td>
 							<td><a
 								class="btn btn-outline-warning"
-								th:href="@{/form/} + ${autor.id}"> Editar </a></td>
+								th:href="@{/autores/editar-autor/} + ${autor.id}"> Editar </a></td>
 							<td><a
 								class="btn btn-outline-danger"
 								th:href="@{/eliminar/} + ${autor.id}" th:text="'Eliminar'">

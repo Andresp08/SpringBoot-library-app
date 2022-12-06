@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+	<header th:replace="layout/layout :: header"></header>
+
+	<div class="container">
+		<h3 th:text="${titulo}" class="text-center mt-5 mb-5">title</h3>
+
+		<div class="col-8 mx-auto my-4">
+			<form th:action="@{/autores/crear-autor}" th:object="${autor}" method="POST">
+				<div class="form-group">
+					<label for="nombre">Nombre</label> 
+					<input type="text" class="form-control" id="nombre" 
+						aria-describedby="emailHelp" placeholder="Enter Name" th:field="*{nombre}"
+						th:value="${nombre}"> <small
+						id="emailHelp" class="form-text text-muted">Por favor escribe el 
+						nombre completo del autor.</small>
+				</div>
+				<div class="form-group">
+					<label for="nacionalidad">Nacionalidad</label> 
+					<input type="text" class="form-control" id="nacionalidad" placeholder="Ej: Perú"
+					th:field="*{nacionalidad}" th:value="${nacionalidad}">
+				</div>
+				<button type="submit" class="btn btn-primary">Guardar Autor</button>
+			</form>
+		</div>
+
+	</div>
+
+	<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>
