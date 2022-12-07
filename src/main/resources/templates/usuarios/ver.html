@@ -4,8 +4,12 @@
 <body>
 	<header th:replace="layout/layout :: header"></header>
 
-	<div class="container-fluid">
+	<div class="container-fluid mb-4">
 		<h3 th:text="${titulo}" class="text-center mt-5 mb-5">title</h3>
+		
+		<div class="d-flex justify-content-end my-2">
+			<a class="btn btn-warning" th:href="@{/usuarios/lista-usuarios}">&laquo; Volver</a>
+		</div>
 
 		<div class="card">
 			<div class="card-body">
@@ -22,7 +26,7 @@
 				</p>
 
 				<table th:if="${not #lists.isEmpty(usuario.prestamos)}"
-					class="table table-bordered table-striped my-4">
+					class="table table-bordered table-striped my-4 text-center">
 					<thead class="thead-dark">
 						<tr>
 							<th>#</th>
@@ -39,20 +43,16 @@
 							<td th:text="${prestamo.fechaDevolucion}"></td>
 							<td th:text="${prestamo.devuelto}"></td>
 							<td>
-								<a class="btn btn-primary" th:text="'Detalle Prestamo'"
+								<a class="btn btn-outline-primary" th:text="'Detalle Prestamo'"
 								th:href="@{'/prestamos/detalle/' +${prestamo.id}}"></a>
 							</td>
 						</tr>
 					</tbody>
-					<!-- <tfooter>
-						<tr th:each="item : ${prestamo}">
-							<td th:text="${item.id}"></td>
-							<td th:text="${item.libro.titulo}"></td>
-						</tr>
-					</tfooter> -->
 				</table>
 			</div>
 		</div>
 	</div>
+	
+	<footer th:replace="layout/layout :: footer"></footer>
 </body>
 </html>

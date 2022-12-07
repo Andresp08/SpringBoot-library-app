@@ -7,6 +7,11 @@
 	<div class="container-fluid">
 		<h3 th:text="${titulo}" class="text-center mt-5 mb-5">title</h3>
 		
+		<div class="d-flex justify-content-end mb-2">
+			<a class="btn btn-warning" th:href="@{'/usuarios/ver/' + ${prestamo.id}}">&laquo;
+				Volver</a>
+		</div>
+		
 		<div class="card">
 			<div class="card-body">
 				<ul class="list-group">
@@ -16,5 +21,8 @@
 			</div>
 		</div>
 	</div>
+	
+	<footer th:replace="layout/layout :: footer"></footer>
+	
 </body>
 </html>

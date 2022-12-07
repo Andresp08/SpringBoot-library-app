@@ -90,4 +90,14 @@ public class AutorController {
 		return "autores/nuevo-autor";
 	}
 	
+	@GetMapping("/eliminar-autor/{id}")
+	public String eliminarAutor(@PathVariable Long id) {
+		
+		if(id > 0) {
+			autorService.delete(id);
+		}
+		
+		return "redirect:/autores/lista-autores";
+	}
+	
 }

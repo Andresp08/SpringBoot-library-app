@@ -6,6 +6,11 @@
 
 	<div class="container">
 		<h3 th:text="${titulo}" class="text-center mt-5 mb-5">title</h3>
+		
+		<div class="d-flex justify-content-end mb-2">
+			<a class="btn btn-warning" th:href="@{/autores/lista-autores}">&laquo;
+				Volver</a>
+		</div>
 
 		<div class="col-8 mx-auto my-4">
 			<form th:action="@{/autores/crear-autor}" th:object="${autor}" method="POST">

@@ -6,6 +6,10 @@
 
 	<div class="container">
 		<h3 th:text="${titulo}" class="text-center mt-5 mb-5">title</h3>
+		
+		<div class="d-flex justify-content-end mb-2">
+			<a class="btn btn-success" th:href="@{/libros/crear-libro}">Añadir Libro</a>
+		</div>
 
 		<p th:if="${libros.isEmpty()}" th:text="'No hay libros para mostrar'"></p>
 
@@ -32,11 +36,11 @@
 							<td th:text="${libro.ISBN}">ISBN</td>
 							<td th:text="${libro.disponible_fisico}">Disponible</td>
 							<td><a
-								class="btn btn-outline-warning"
-								th:href="@{/form/} + ${libro.id}"> Editar </a></td>
+								class="btn btn-warning"
+								th:href="@{/libros/editar-libro/} + ${libro.id}"> Editar </a></td>
 							<td><a
-								class="btn btn-outline-danger"
-								th:href="@{/eliminar/} + ${libro.id}" th:text="'Eliminar'">
+								class="btn btn-danger"
+								th:href="@{/libros/eliminar-libro/} + ${libro.id}" th:text="'Eliminar'">
 								Eliminar </a></td>
 						</tr>
 					</tbody>
