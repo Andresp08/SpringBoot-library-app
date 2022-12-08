@@ -3,26 +3,51 @@
 <head th:replace="layout/layout :: head"></head>
 <body>
 	<header th:replace="layout/layout :: header"></header>
-	
+
 	<div class="container-fluid">
 		<h3 th:text="${titulo}" class="text-center mt-5 mb-5">title</h3>
+
+
+		<div class="col-8 mx-auto my-2">
 		
-		<div class="d-flex justify-content-end mb-2">
-			<a class="btn btn-warning" th:href="@{'/usuarios/ver/' + ${prestamo.id}}">&laquo;
-				Volver</a>
-		</div>
+			<div class="d-flex justify-content-end mb-2">
+				<a class="btn btn-warning"
+					th:href="@{'/usuarios/ver/' + ${prestamo.id}}">&laquo; Volver
+				</a>
+			</div>
 		
-		<div class="card">
-			<div class="card-body">
-				<ul class="list-group">
-					<li class="list-group-item" th:text=" 'Libro: ' + ${prestamo.libro.titulo}"></li>
-					<li class="list-group-item" th:text=" 'Editorial: ' +  ${prestamo.libro.editorial}"></li>
-				</ul>
+			<div class="card">
+				<div class="card-body">
+					<div class="card-title">
+						<p class="text-center font-weight-bold"
+							th:text="'A nombre de: ' + ${prestamo.usuario.nombre} "></p>
+					</div>
+					<ul class="list-group">
+						<li class="list-group-item"><span class="font-weight-bold">Libro:</span>
+							<p class="m-0" style="display: inline-block;"
+								th:text="${prestamo.libro.titulo}">
+							</p>
+						</li>
+						
+						<li class="list-group-item"><span class="font-weight-bold">Editorial:</span>
+							<p class="m-0" style="display: inline-block;"
+								th:text="${prestamo.libro.editorial}">
+							</p>
+						</li>
+						
+						<li class="list-group-item"><span class="font-weight-bold">Fecha Devolución:</span>
+							<p class="m-0" style="display: inline-block;"
+								th:text="${#dates.format(prestamo.fechaDevolucion, 'dd-MMM-yyyy')}">
+							</p>
+						</li>
+
+					</ul>
+				</div>
 			</div>
 		</div>
 	</div>
-	
+
 	<footer th:replace="layout/layout :: footer"></footer>
-	
+
 </body>
 </html>

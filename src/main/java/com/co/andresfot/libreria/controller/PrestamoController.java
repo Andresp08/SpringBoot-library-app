@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.co.andresfot.libreria.model.entity.Libro;
 import com.co.andresfot.libreria.model.entity.Prestamo;
@@ -22,6 +23,7 @@ import com.co.andresfot.libreria.model.service.IUsuarioService;
 
 @Controller
 @RequestMapping("/prestamos")
+@SessionAttributes("prestamo")
 public class PrestamoController {
 
 	@Autowired
@@ -87,7 +89,7 @@ public class PrestamoController {
 			return "redirect:/lista-usuarios";
 		}
 		
-		model.addAttribute("titulo", "Detalle del prestamo");
+		model.addAttribute("titulo", "Detalle del prestamo del Libro ");
 		model.addAttribute("prestamo", prestamo);
 		
 		return "prestamo/detalle";

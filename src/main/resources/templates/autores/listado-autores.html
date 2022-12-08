@@ -32,10 +32,10 @@
 							<td th:text="${autor.nombre}">Nombre</td>
 							<td th:text="${autor.nacionalidad}">Nacionalidad</td>
 							<td><a
-								class="btn btn-outline-warning"
+								class="btn btn-warning"
 								th:href="@{/autores/editar-autor/} + ${autor.id}"> Editar </a></td>
 							<td><a
-								class="btn btn-outline-danger"
+								class="btn btn-danger"
 								th:href="@{/autores/eliminar-autor/} + ${autor.id}" th:text="'Eliminar'">
 								Eliminar </a></td>
 						</tr>

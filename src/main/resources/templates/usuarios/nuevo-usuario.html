@@ -8,6 +8,10 @@
 		<h3 th:text="${titulo}" class="text-center mt-5 mb-5">title</h3>
 
 		<div class="col-8 mx-auto my-4">
+		
+			<div class="d-flex justify-content-end my-2">
+				<a class="btn btn-warning" th:href="@{/usuarios/lista-usuarios}">&laquo; Volver</a>
+			</div>
 
 			<form th:action="@{/usuarios/crear-usuario}" th:object="${usuario}" 
 				method="POST">
