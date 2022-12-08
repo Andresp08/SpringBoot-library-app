@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 import com.co.andresfot.libreria.model.entity.Usuario;
 import com.co.andresfot.libreria.model.service.IPrestamoService;
@@ -39,7 +40,7 @@ public class UsuarioController {
 		
 		Page<Usuario> usuarios = usuarioService.findAll(pageable);
 		
-		PageRender<Usuario> pageRender = new PageRender<>("/lista-usuarios", usuarios);
+		PageRender<Usuario> pageRender = new PageRender<>("/usuarios/lista-usuarios", usuarios);
 		
 		model.addAttribute("titulo", "Listado de Usuarios");
 		model.addAttribute("usuarios", usuarios);
@@ -60,7 +61,8 @@ public class UsuarioController {
 	}
 	
 	@PostMapping("/crear-usuario")
-	public String guardarAutor(@Valid Usuario usuario, BindingResult result, Model model) {
+	public String guardarAutor(@Valid Usuario usuario, BindingResult result, Model model, 
+			SessionStatus status) {
 		
 		if(result.hasErrors()) {
 			model.addAttribute("titulo", "Añadir nuevo usuario");
@@ -69,6 +71,7 @@ public class UsuarioController {
 		}
 		
 		usuarioService.save(usuario);
+		status.setComplete();
 		
 		return "redirect:/usuarios/lista-usuarios";
 	}
@@ -100,7 +103,7 @@ public class UsuarioController {
 		Usuario usuario = usuarioService.fetchByIdWithPrestamos(id);
 		
 		if(usuario == null) {
-			return "redirect:/lista-usuarios";
+			return "redirect:/usuarios/lista-usuarios";
 		}
 		
 		model.addAttribute("usuario", usuario);

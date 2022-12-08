@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 import com.co.andresfot.libreria.model.entity.Autor;
 import com.co.andresfot.libreria.model.service.IAutorService;
@@ -36,7 +37,7 @@ public class AutorController {
 		
 		Page<Autor> autores = autorService.findAll(pageable);
 		
-		PageRender<Autor> pageRender = new PageRender<>("/lista-autores", autores);
+		PageRender<Autor> pageRender = new PageRender<>("/autores/lista-autores", autores);
 		
 		model.addAttribute("titulo", "Listado de Autores");
 		model.addAttribute("autores", autores);
@@ -57,7 +58,8 @@ public class AutorController {
 	}
 	
 	@PostMapping("/crear-autor")
-	public String guardarAutor(@Valid Autor autor, BindingResult result, Model model) {
+	public String guardarAutor(@Valid Autor autor, BindingResult result, Model model, 
+			SessionStatus status) {
 		
 		if(result.hasErrors()) {
 			model.addAttribute("titulo", "Añadir nuevo autor");
@@ -66,6 +68,7 @@ public class AutorController {
 		}
 		
 		autorService.save(autor);
+		status.setComplete();
 		
 		return "redirect:/autores/lista-autores";
 	}

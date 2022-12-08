@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 import com.co.andresfot.libreria.model.entity.Autor;
 import com.co.andresfot.libreria.model.entity.Libro;
@@ -42,7 +43,7 @@ public class LibroController {
 
 		Page<Libro> libros = libroService.findAll(pageable);
 
-		PageRender<Libro> pageRender = new PageRender<>("/lista-libros", libros);
+		PageRender<Libro> pageRender = new PageRender<>("/libros/lista-libros", libros);
 
 		model.addAttribute("titulo", "Listado de Libros");
 		model.addAttribute("libros", libros);
@@ -66,7 +67,8 @@ public class LibroController {
 	}
 
 	@PostMapping("/crear-libro")
-	public String crearLibro(@Valid Libro libro, BindingResult result, Model model) {
+	public String crearLibro(@Valid Libro libro, BindingResult result, Model model, 
+			SessionStatus status) {
 
 		List<Autor> autores = autorService.findAll();
 
@@ -82,6 +84,7 @@ public class LibroController {
 		}
 
 		libroService.save(libro);
+		status.setComplete();
 
 		return "redirect:/libros/lista-libros";
 	}
