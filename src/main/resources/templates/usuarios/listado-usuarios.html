@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="layout/layout :: head"></head>
 <body>
 	<header th:replace="layout/layout :: header"></header>
@@ -7,7 +7,7 @@
 	<div class="container">
 		<h3 th:text="${titulo}" class="text-center mt-5 mb-5">title</h3>
 		
-		<div class="d-flex justify-content-end mb-2">
+		<div class="d-flex justify-content-end mb-2" sec:authorize="hasRole('ROLE_ADMIN')">
 			<a class="btn btn-success" th:href="@{/usuarios/crear-usuario}">Añadir Usuario</a>
 		</div>
 
@@ -23,9 +23,9 @@
 							<th>Nombre</th>
 							<th>Dirección</th>
 							<th>Correo</th>
-							<th>Editar</th>
-							<th>Eliminar</th>
-							<th>Detalle del Usuario</th>
+							<th sec:authorize="hasRole('ROLE_ADMIN')">Editar</th>
+							<th sec:authorize="hasRole('ROLE_ADMIN')">Eliminar</th>
+							<th sec:authorize="hasRole('ROLE_ADMIN')">Detalle del Usuario</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -34,14 +34,15 @@
 							<td th:text="${usuario.nombre}">Nombre</td>
 							<td th:text="${usuario.correo}">Correo</td>
 							<td th:text="${usuario.direccion}">Direccion</td>
-							<td><a
+							<td sec:authorize="hasRole('ROLE_ADMIN')">
+								<a
 								class="btn btn-warning"
 								th:href="@{/usuarios/editar-usuario/} + ${usuario.id}"> Editar </a></td>
-							<td><a
-								class="btn btn-danger"
+							<td sec:authorize="hasRole('ROLE_ADMIN')">
+								<a class="btn btn-danger"
 								th:href="@{/usuarios/eliminar-usuario/} + ${usuario.id}" th:text="'Eliminar'">
 								Eliminar </a></td>
-							<td>
+							<td sec:authorize="hasRole('ROLE_ADMIN')">
 								<a  class="btn btn-outline-primary" 
 									th:href="@{/usuarios/ver/} + ${usuario.id}"
 									th:text="'Detalle del Usuario'">Detalle del Usuario
