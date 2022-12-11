@@ -13,8 +13,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
+import com.co.andresfot.libreria.auth.handler.LoginSuccesHandler;
+
 @Configuration
 public class SpringSecurityConfig {
+	
+	@Autowired
+	private LoginSuccesHandler successHandler;
 	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
@@ -31,8 +36,10 @@ public class SpringSecurityConfig {
 		.antMatchers("/usuarios/**").hasAnyRole("ADMIN")
 		.anyRequest().authenticated()
 		.and()
-			.formLogin().loginPage("/login").
-			permitAll()
+			.formLogin()
+				.successHandler(successHandler)
+				.loginPage("/login")
+			.permitAll()
 		.and()
 		.logout().permitAll()
 		.and()

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.co.andresfot.libreria.model.entity.Libro;
 import com.co.andresfot.libreria.model.entity.Prestamo;
@@ -53,7 +54,7 @@ public class PrestamoController {
 	
 	@PostMapping("/guardar-prestamo")
 	public String guardarPrestamo(@Valid Prestamo prestamo, BindingResult result, Model model, 
-			SessionStatus status) {
+			SessionStatus status, RedirectAttributes flash) {
 		
 		List<Usuario> usuarios = usuarioService.findAll();
 		List<Libro> libros = libroService.findAll();
@@ -79,6 +80,7 @@ public class PrestamoController {
 		
 		prestamoService.save(prestamo);
 		status.setComplete();
+		flash.addFlashAttribute("success", "Prestamo creado con exito!!");
 		
 		return "redirect:/libros/lista-libros";
 	}

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.co.andresfot.libreria.model.entity.Usuario;
 import com.co.andresfot.libreria.model.service.IPrestamoService;
@@ -62,7 +63,7 @@ public class UsuarioController {
 	
 	@PostMapping("/crear-usuario")
 	public String guardarAutor(@Valid Usuario usuario, BindingResult result, Model model, 
-			SessionStatus status) {
+			SessionStatus status, RedirectAttributes flash) {
 		
 		if(result.hasErrors()) {
 			model.addAttribute("titulo", "Añadir nuevo usuario");
@@ -72,12 +73,14 @@ public class UsuarioController {
 		
 		usuarioService.save(usuario);
 		status.setComplete();
+		flash.addFlashAttribute("success", "Autor creado con exito!!");
 		
 		return "redirect:/usuarios/lista-usuarios";
 	}
 	
 	@GetMapping("/editar-usuario/{id}")
-	public String editarUsuario(@PathVariable(value = "id") Long id, Model model) {
+	public String editarUsuario(@PathVariable(value = "id") Long id, Model model, 
+			RedirectAttributes flash) {
 		
 		Usuario usuario = null;
 		
@@ -85,6 +88,7 @@ public class UsuarioController {
 			usuario = usuarioService.findOne(id);
 			
 			if(usuario == null) {
+				flash.addFlashAttribute("error", "El usuario no existe en la BBDD!!");
 				return "redirect:/usuarios/lista-usuarios";
 			}
 		}else {
@@ -114,10 +118,11 @@ public class UsuarioController {
 	}
 	
 	@GetMapping("/eliminar-usuario/{id}")
-	public String eliminarUsuario(@PathVariable Long id) {
+	public String eliminarUsuario(@PathVariable Long id, RedirectAttributes flash) {
 		
 		if(id > 0) {
 			usuarioService.delete(id);
+			flash.addFlashAttribute("success", "Usuario eliminado con exito");
 		}
 		
 		return "redirect:/usuarios/lista-usuarios";

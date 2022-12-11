@@ -57,6 +57,17 @@
 
 			</div>
 		</nav>
+		
+		<!-- mensajes flash -->
+		<div class="alert alert-success" th:if="${success != null}"
+			th:text="${success}"></div>
+		<div class="alert alert-danger" th:if="${error != null}"
+			th:text="${error}"></div>
+		<div class="alert alert-warning" th:if="${warning != null}"
+			th:text="${warning}"></div>
+		<div class="alert alert-info" th:if="${info != null}"
+			th:text="${info}"></div>
+		
 	</header>
 
 	<footer th:fragment="footer" class="container-fluid bg-dark py-3">

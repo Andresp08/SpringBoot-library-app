@@ -1,7 +1,12 @@
 
+body{
+	position: relative;
+	padding-bottom: 5rem;
+	min-height: 100vh;
+}
+
 footer {
-   left:0px;
-   bottom:0px;
-   width:100%;
-   background:#999;
+   position: absolute;
+   bottom: 0;
+   width: 100%;
 }

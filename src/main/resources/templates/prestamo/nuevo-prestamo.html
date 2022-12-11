@@ -4,7 +4,7 @@
 <body>
 	<header th:replace="layout/layout :: header"></header>
 	
-	<h3 th:text="${titulo}" class="text-center my-3"></h3>
+	<h3 th:text="${titulo}" class="text-center mt-5 "></h3>
 
 	<div class="col-8 mx-auto my-5">
 		<form th:action="@{/prestamos/guardar-prestamo}" th:object="${prestamo}" method="POST">

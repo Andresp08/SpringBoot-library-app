@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.co.andresfot.libreria.model.entity.Autor;
 import com.co.andresfot.libreria.model.service.IAutorService;
@@ -59,7 +60,7 @@ public class AutorController {
 	
 	@PostMapping("/crear-autor")
 	public String guardarAutor(@Valid Autor autor, BindingResult result, Model model, 
-			SessionStatus status) {
+			SessionStatus status, RedirectAttributes flash) {
 		
 		if(result.hasErrors()) {
 			model.addAttribute("titulo", "Añadir nuevo autor");
@@ -69,18 +70,20 @@ public class AutorController {
 		
 		autorService.save(autor);
 		status.setComplete();
+		flash.addFlashAttribute("success", "Autor creado con exito!!");
 		
 		return "redirect:/autores/lista-autores";
 	}
 	
 	@GetMapping("/editar-autor/{id}")
-	public String editarAutor(@PathVariable Long id, Model model) {
+	public String editarAutor(@PathVariable Long id, Model model, RedirectAttributes flash) {
 		Autor autor = null;
 		
 		if(id > 0 ) {
 			autor = autorService.findOne(id);
 			
 			if(autor == null) {
+				flash.addFlashAttribute("error", "El autor no existe en la BBDD!!");
 				return "redirect:/autores/lista-autores";
 			}
 		} else {
@@ -94,10 +97,11 @@ public class AutorController {
 	}
 	
 	@GetMapping("/eliminar-autor/{id}")
-	public String eliminarAutor(@PathVariable Long id) {
+	public String eliminarAutor(@PathVariable Long id, RedirectAttributes flash) {
 		
 		if(id > 0) {
 			autorService.delete(id);
+			flash.addFlashAttribute("success", "Cliente eliminado con exito");
 		}
 		
 		return "redirect:/autores/lista-autores";

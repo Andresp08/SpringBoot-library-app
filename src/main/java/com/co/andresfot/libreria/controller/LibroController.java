@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.co.andresfot.libreria.model.entity.Autor;
 import com.co.andresfot.libreria.model.entity.Libro;
@@ -68,7 +69,7 @@ public class LibroController {
 
 	@PostMapping("/crear-libro")
 	public String crearLibro(@Valid Libro libro, BindingResult result, Model model, 
-			SessionStatus status) {
+			SessionStatus status, RedirectAttributes flash) {
 
 		List<Autor> autores = autorService.findAll();
 
@@ -85,12 +86,13 @@ public class LibroController {
 
 		libroService.save(libro);
 		status.setComplete();
+		flash.addFlashAttribute("success", "Libro creado con exito");
 
 		return "redirect:/libros/lista-libros";
 	}
 
 	@GetMapping("/editar-libro/{id}")
-	public String editarLibro(@PathVariable Long id, Model model) {
+	public String editarLibro(@PathVariable Long id, Model model, RedirectAttributes flash) {
 
 		Libro libro = null;
 		List<Autor> autores = autorService.findAll();
@@ -99,6 +101,7 @@ public class LibroController {
 			libro = libroService.findOne(id);
 
 			if (libro == null) {
+				flash.addFlashAttribute("error", "El libro no existe en la BBDD!!");
 				return "redirect:/libros/lista-libros";
 			}
 		} else {
@@ -113,10 +116,11 @@ public class LibroController {
 	}
 	
 	@GetMapping("/eliminar-libro/{id}")
-	public String eliminarLibro(@PathVariable Long id) {
+	public String eliminarLibro(@PathVariable Long id, RedirectAttributes flash) {
 		
 		if(id > 0) {
 			libroService.delete(id);
+			flash.addFlashAttribute("success", "Libro eliminado con exito!!");
 		}
 		
 		return "redirect:/lista-libros";
