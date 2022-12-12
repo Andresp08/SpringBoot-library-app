@@ -15,7 +15,9 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -31,12 +33,14 @@ public class Prestamo implements Serializable{
 
 	@NotNull
 	@Column(name = "fecha_prestamo")
+	@PastOrPresent(message = "La fecha de prestamo no puede ser posterior al día de hoy")
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date fechaPrestamo;
 
 	@NotNull
 	@Column(name = "fecha_devolucion")
+	@Future(message = "La fecha de devolución no puede ser inferior al día de hoy")
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date fechaDevolucion;
@@ -81,7 +85,7 @@ public class Prestamo implements Serializable{
 		this.fechaDevolucion = fechaDevolucion;
 	}
 
-	public boolean isDevuelto() {
+	public boolean getDevuelto() {
 		return devuelto;
 	}
 

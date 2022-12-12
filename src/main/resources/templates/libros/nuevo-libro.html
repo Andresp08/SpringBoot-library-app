@@ -20,34 +20,55 @@
 						<label for="titulo">Titulo</label> <input type="text"
 							class="form-control" id="titulo" placeholder="Titulo del libro"
 							th:field="*{titulo}" th:value="${titulo}">
+							<small class="text-danger"
+							th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}"></small>
 					</div>
 					<div class="form-group col-md-6">
 						<label for="editorial">Editorial</label> <input type="text"
 							class="form-control" id="editorial"
 							placeholder="Editorial del libro" th:field="*{editorial}"
 							th:value="${editorial}">
+							<small class="text-danger"
+							th:if="${#fields.hasErrors('editorial')}" th:errors="*{editorial}"></small>
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="isbn">ISBN</label> <input type="text"
 						class="form-control" id="isbn" placeholder="ISBN del Libro"
 						th:field="*{ISBN}" th:value="${ISBN}">
+						<small class="text-danger"
+							th:if="${#fields.hasErrors('ISBN')}" th:errors="*{ISBN}"></small>
 				</div>
 				<div class="form-group">
-					<label for="autor">Autor</label> <select id="autor"
-						class="form-control">
+					<label for="autor">Autor</label> 
+						<select id="autor" class="form-control">
 						<option selected disabled="disabled">Autor...</option>
 						<option th:each="autor : ${autores}" th:value="${autor.id}"
-							th:text="${autor.nombre}">Autor...</option>
+							th:text="${autor.nombre}" th:field="*{autor}">Autor...</option>
 					</select>
+					<small class="text-danger"
+							th:if="${#fields.hasErrors('autor')}" th:errors="*{autor}"></small>
 				</div>
 
 				<div class="form-row">
 					<div class="form-group col-md-6">
-						<label for="disponible">¿Disponible Fisico?</label> <input
+						<!-- <label for="disponible">¿Disponible Fisico?</label> <input
 							type="text" class="form-control" id="disponible"
 							placeholder="Si, No" th:field="*{disponible_fisico}"
-							th:value="${disponible_fisico}">
+							th:value="${disponible_fisico}">-->
+							
+						<!--<label for="disponible">Disponible</label> 
+						<select id="disponible" class="form-control">
+							<option selected disabled="disabled">Disponible...</option>
+							<option th:each="disponible : ${disponibles.entrySet()}" th:value="${disponible.key}"
+							th:text="${disponible.value}" th:field="*{disponible_fisico}">Disponible...</option>
+						</select>
+						<small class="text-danger"
+							th:if="${#fields.hasErrors('disponible_fisico')}" 
+							th:errors="*{disponible_fisico}"></small>-->
+							
+						<label for="habilitar">¿Disponible en Fisico?</label>
+							<input type="checkbox" id="habilitar" th:field="*{disponible_fisico}">
 					</div>
 				</div>
 				<button type="submit" class="btn btn-primary">Guardar Libro</button>

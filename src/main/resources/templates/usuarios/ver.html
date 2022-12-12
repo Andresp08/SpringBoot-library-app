@@ -51,6 +51,7 @@
 								<th>Fecha Devolución</th>
 								<th>Devuelto</th>
 								<th>Detalle Prestamo</th>
+								<th>Editar Prestamo</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -58,9 +59,12 @@
 								<td th:text="${prestamo.id}"></td>
 								<td th:text="${#dates.format(prestamo.fechaPrestamo, 'dd-MMM-yyyy')}"></td>
 								<td th:text="${#dates.format(prestamo.fechaDevolucion, 'dd-MMM-yyyy')}"></td>
-								<td th:text="${prestamo.devuelto}"></td>
+								<td th:text="${prestamo.devuelto} ? 'Si' : 'No'"></td>
 								<td><a class="btn btn-outline-primary"
 									th:text="'Detalle Prestamo'"
+									th:href="@{'/prestamos/detalle/' +${prestamo.id}}"></a></td>
+								<td><a class="btn btn-warning"
+									th:text="'Editar Prestamo'"
 									th:href="@{'/prestamos/detalle/' +${prestamo.id}}"></a></td>
 							</tr>
 						</tbody>

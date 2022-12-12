@@ -13,41 +13,48 @@
 					<label for="fecha-prestamo">Fecha Prestamo</label> 
 					<input type="date" class="form-control" id="fecha-prestamo" 
 						th:field="*{fechaPrestamo}" th:value="${fechaPrestamo}">
+						<small class="text-danger"
+							th:if="${#fields.hasErrors('fechaPrestamo')}" 
+							th:errors="*{fechaPrestamo}"></small>
 				</div>
 				<div class="form-group col-md-6">
 					<label for="fecha-devolucion">Fecha Devolución</label>
 					<input type="date" class="form-control" id="fecha-devolucion" 
 					th:field="*{fechaDevolucion}" th:value="${fechaDevolucion}">
+					<small class="text-danger"
+							th:if="${#fields.hasErrors('fechaDevolucion')}" 
+							th:errors="*{fechaDevolucion}"></small>
 				</div>
 			</div>
-			<div class="form-group">
-				<label for="devuelto">¿Devuelto?</label> <input type="text"
-					class="form-control" id="devuelto" placeholder="1" 
-					th:field="*{devuelto}" th:value="${devuelto}">
-					
-					<!--<select id="devuelto" class="form-control">
-						<option selected disabled="disabled">Devuelto...</option>
-						<option th:value="${1}">No</option>
-						<option th:value="${2}">Si</option>
-					</select>-->
+			<div class="form-group">												
+					<label for="devuelto">¿Devuelto?</label>
+							<input type="checkbox" id="devuelto" th:field="*{devuelto}">
 			</div>
 			<div class="form-row">
 				<div class="form-group col-md-4">
 					<label for="usuario">Usuario</label> 
 					<select id="usuario" class="form-control">
 						<option selected disabled="disabled">Usuario...</option>
-						<option th:each="usuario : ${usuarios}" th:value="${usuario.id}" 
-						th:text="${usuario.nombre}">Usuario</option>
+						<option th:each="usuario : ${usuarios}" th:field="*{usuario}" 
+						th:value="${usuario.id}" th:text="${usuario.nombre}">Usuario</option>
 					</select>
+					<small class="text-danger"
+							th:if="${#fields.hasErrors('usuario')}" 
+							th:errors="*{usuario}"></small>
 				</div>
 				
 				<div class="form-group col-md-4">
 					<label for="libro">Libro</label> 
 					<select id="libro" class="form-control">
 						<option selected disabled="disabled">Libro...</option>
-						<option th:each="libro : ${libros}" th:value="${libro.id}" 
-						th:text="${libro.titulo} + ' - ' + ${libro.ISBN}">Libro</option>
+						<option th:each="libro : ${libros}" th:field="*{libro}" th:value="${libro.id}" 
+							th:text="${libro.titulo} + ' - ' + ${libro.ISBN}">
+							Libro
+						</option>
 					</select>
+					<small class="text-danger"
+							th:if="${#fields.hasErrors('libro')}" 
+							th:errors="*{libro}"></small>
 				</div>
 			</div>
 			<button type="submit" class="btn btn-primary">Realizar Prestamo</button>

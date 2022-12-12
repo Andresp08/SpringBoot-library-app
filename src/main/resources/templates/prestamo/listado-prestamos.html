@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+	<header th:replace="layout/layout :: header"></header>
+
+	<div class="container">
+		<h3 th:text="${titulo}" class="text-center mt-5 mb-5">title</h3>
+		
+		
+		<div class="d-flex justify-content-end mb-2" sec:authorize="hasRole('ROLE_ADMIN')">
+			<a class="btn btn-success" th:href="@{/prestamos/crear-prestamo}">Crear Prestamo</a>
+		</div>
+
+		<p th:if="${prestamos.isEmpty()}" th:text="'No hay prestamos para mostrar'"></p>
+
+		<div class="row d-flex justify-content-center">
+			<div class="col-12 mx-auto">
+				<table th:if="${!prestamos.isEmpty()}"
+					class="table table-striped text-center table-bordered">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Nombre</th>
+							<th>Libro</th>
+							<th>Fecha Prestamo</th>
+							<th>Fecha Devolucion</th>
+							<th sec:authorize="hasRole('ROLE_ADMIN')">Editar</th>
+							<th sec:authorize="hasRole('ROLE_ADMIN')">Eliminar</th>
+							<th sec:authorize="hasRole('ROLE_ADMIN')">Detalle del Prestamo</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="prestamo : ${prestamos}">
+							<td th:text="${prestamo.id}">Id></td>
+							<td th:text="${prestamo.usuario.nombre}">Usuario</td>
+							<td th:text="${prestamo.libro.titulo}">Libro</td>
+							<td th:text="${#dates.format(prestamo.fechaPrestamo, 'dd-MMM-yyyy')}">Fecha prestamo</td>
+							<td th:text="${#dates.format(prestamo.fechaDevolucion, 'dd-MMM-yyyy')}">Fecha Devolución</td>
+							<td sec:authorize="hasRole('ROLE_ADMIN')">
+								<a
+								class="btn btn-warning"
+								th:href="@{/prestamos/editar-prestamo/} + ${prestamo.id}"> Editar </a></td>
+							<td sec:authorize="hasRole('ROLE_ADMIN')">
+								<a class="btn btn-danger"
+								th:href="@{/prestamos/eliminar-prestamo/} + ${prestamo.id}" th:text="'Eliminar'">
+								Eliminar </a></td>
+							<td sec:authorize="hasRole('ROLE_ADMIN')">
+								<a  class="btn btn-outline-primary" 
+									th:href="@{/prestamos/detalle/} + ${prestamo.id}"
+									th:text="'Detalle del Prestamo'">Detalle del Prestamo
+								</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<nav th:replace="paginator-nav :: paginator"></nav>
+
+			</div>
+		</div>
+		<!-- row -->
+		
+	</div>
+
+	<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>

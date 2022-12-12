@@ -14,11 +14,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+
 
 @Entity
 @Table(name = "libro")
-public class Libro implements Serializable{
+public class Libro implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -35,14 +35,12 @@ public class Libro implements Serializable{
 	@NotEmpty
 	private String ISBN;
 
-	@NotNull
 	private boolean disponible_fisico;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "autor_id")
 	private Autor autor;
 
-	/*@OneToMany(mappedBy = "prestamo", fetch = FetchType.LAZY, cascade = CascadeType.ALL)*/
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "libro_id")
 	private List<Prestamo> prestamos;

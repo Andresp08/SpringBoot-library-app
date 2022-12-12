@@ -18,14 +18,17 @@
 					<label for="nombre">Nombre</label> 
 					<input type="text" class="form-control" id="nombre" 
 						aria-describedby="emailHelp" placeholder="Enter Name" th:field="*{nombre}"
-						th:value="${nombre}"> <small
-						id="emailHelp" class="form-text text-muted">Por favor escribe el 
-						nombre completo del autor.</small>
+						th:value="${nombre}"> 
+						<small class="text-danger" th:if="${#fields.hasErrors('nombre')}" 
+							th:errors="*{nombre}"></small>
 				</div>
 				<div class="form-group">
 					<label for="nacionalidad">Nacionalidad</label> 
 					<input type="text" class="form-control" id="nacionalidad" placeholder="Ej: Perú"
 					th:field="*{nacionalidad}" th:value="${nacionalidad}">
+					<small class="text-danger"
+							th:if="${#fields.hasErrors('nacionalidad')}" 
+							th:errors="*{nacionalidad}"></small>
 				</div>
 				<button type="submit" class="btn btn-primary">Guardar Autor</button>
 			</form>

@@ -1,8 +1,12 @@
 package com.co.andresfot.libreria.model.service;
 
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import org.springframework.stereotype.Service;
 
 import com.co.andresfot.libreria.model.dao.IPrestamoDao;
@@ -17,6 +21,11 @@ public class PrestamoServiceImpl implements IPrestamoService {
 	@Override
 	public List<Prestamo> findAll() {
 		return (List<Prestamo>) prestamoDao.findAll();
+	}
+	
+	@Override
+	public Page<Prestamo> findAllPaginable(Pageable pageable) {
+		return prestamoDao.findAll(pageable);
 	}
 
 	@Override

@@ -83,7 +83,16 @@ public class LibroController {
 		for (int i = 0; i < autores.size(); i++) {
 			libro.setAutor(autores.get(i));
 		}
-
+		
+		if(libro.isDisponible_fisico()) {
+			libro.setDisponible_fisico(true);
+		} else {
+			libro.setDisponible_fisico(false);
+		}
+		
+		boolean valor = libro.isDisponible_fisico();
+		System.out.println(valor);
+		
 		libroService.save(libro);
 		status.setComplete();
 		flash.addFlashAttribute("success", "Libro creado con exito");
@@ -123,7 +132,7 @@ public class LibroController {
 			flash.addFlashAttribute("success", "Libro eliminado con exito!!");
 		}
 		
-		return "redirect:/lista-libros";
+		return "redirect:/libros/lista-libros";
 	}
 
 }

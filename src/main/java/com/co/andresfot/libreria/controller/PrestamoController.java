@@ -5,6 +5,9 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -22,6 +26,7 @@ import com.co.andresfot.libreria.model.entity.Usuario;
 import com.co.andresfot.libreria.model.service.ILibroService;
 import com.co.andresfot.libreria.model.service.IPrestamoService;
 import com.co.andresfot.libreria.model.service.IUsuarioService;
+import com.co.andresfot.libreria.util.paginator.PageRender;
 
 @Controller
 @RequestMapping("/prestamos")
@@ -36,6 +41,25 @@ public class PrestamoController {
 	
 	@Autowired
 	private ILibroService libroService;
+	
+	@GetMapping("/lista-prestamos")
+	public String listadoPrestamos(@RequestParam(name = "page", defaultValue = "0") int page,
+			Model model) {
+		
+		
+		Pageable pageable = PageRequest.of(page, 8);
+		
+		Page<Prestamo> prestamos = prestamoService.findAllPaginable(pageable);
+		
+		PageRender<Prestamo> pageRender = new PageRender<>("/prestamos/lista-prestamos", prestamos);
+		
+		model.addAttribute("titulo", "Listado de Prestamos");
+		model.addAttribute("prestamos", prestamos);
+		model.addAttribute("page", pageRender);
+		
+		
+		return "prestamo/listado-prestamos";
+	}
 	
 	@GetMapping("/crear-prestamo")
 	public String crearPrestamo(Model model) {
@@ -76,6 +100,12 @@ public class PrestamoController {
 		
 		for (int i = 0; i < usuarios.size(); i++) {
 			prestamo.setUsuario(usuarios.get(i));
+		}
+		
+		if(prestamo.getDevuelto()) {
+			prestamo.setDevuelto(true);
+		} else {
+			prestamo.setDevuelto(false);
 		}
 		
 		prestamoService.save(prestamo);
