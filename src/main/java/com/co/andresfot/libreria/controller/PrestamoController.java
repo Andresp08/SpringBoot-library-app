@@ -82,11 +82,16 @@ public class PrestamoController {
 	}
 	
 	@PostMapping("/crear-prestamo")
-	public String guardarPrestamo(@Valid Prestamo prestamo, BindingResult result, Model model, 
+	public String guardarPrestamo(@RequestParam(name = "libro", required = false) Long libroId,
+			@RequestParam(name = "usuario", required = false) Long usuarioId,
+			@Valid Prestamo prestamo, BindingResult result, Model model, 
 			SessionStatus status, RedirectAttributes flash) {
 		
 		List<Usuario> usuarios = usuarioService.findAll();
 		List<Libro> libros = libroService.findAll();
+		
+		Libro libro = libroService.findOne(libroId);
+		Usuario usuario = usuarioService.findOne(usuarioId);
 		
 		if(result.hasErrors()) {
 			model.addAttribute("titulo", "Crear nuevo prestamo");
@@ -97,18 +102,13 @@ public class PrestamoController {
 			return "prestamo/nuevo-prestamo";
 		}
 		
+		prestamo.setLibro(libro);
+		prestamo.setUsuario(usuario);
+		
 		if(prestamo.getDevuelto()) {
 			prestamo.setDevuelto(true);
 		} else {
 			prestamo.setDevuelto(false);
-		}
-		
-		for (int i = 0; i < libros.size(); i++) {
-			prestamo.setLibro(libros.get(i));
-		}
-		
-		for (int i = 0; i < usuarios.size(); i++) {
-			prestamo.setUsuario(usuarios.get(i));
 		}
 		
 		prestamoService.save(prestamo);

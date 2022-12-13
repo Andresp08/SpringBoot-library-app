@@ -1,7 +1,6 @@
 package com.co.andresfot.libreria.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.co.andresfot.libreria.model.dao.IAutorDao;
 import com.co.andresfot.libreria.model.entity.Autor;
 import com.co.andresfot.libreria.model.entity.Libro;
 import com.co.andresfot.libreria.model.service.IAutorService;
@@ -38,9 +36,6 @@ public class LibroController {
 
 	@Autowired
 	private IAutorService autorService;
-	
-	@Autowired
-	private IAutorDao autorDao;
 	
 	@GetMapping("/lista-libros")
 	public String listarLibros(@RequestParam(name = "page", defaultValue = "0") int page, Model model) {
@@ -73,12 +68,13 @@ public class LibroController {
 	}
 
 	@PostMapping("/crear-libro")
-	public String crearLibro(@Valid Libro libro, BindingResult result, Model model, 
+	public String crearLibro(@RequestParam( name = "autor", required = false) Long autorId, 
+			@Valid Libro libro, BindingResult result, Model model, 
 			SessionStatus status, RedirectAttributes flash) {
 
 		List<Autor> autores = autorService.findAll();
 		
-		Optional<Autor> autorOptional = autorDao.findById(libro.getAutor().getId());
+		Autor autor = autorService.findOne(autorId);
 
 		if (result.hasErrors()) {
 			model.addAttribute("titulo", "Añadir nuevo Libro");
@@ -87,24 +83,13 @@ public class LibroController {
 			return "libros/nuevo-libro";
 		}
 		
-		libro.setAutor(autorOptional.get());
-
-		/*for (int i = 0; i < autores.size(); i++) {
-			libro.setAutor(autores.get(i));
-		}*/
-		
-		/*for (int i = 0; i < autores.size(); i++) {
-			libro.setAutor(autores.get(i));
-		}*/
+		libro.setAutor(autor);
 		
 		if(libro.isDisponible_fisico()) {
 			libro.setDisponible_fisico(true);
 		} else {
 			libro.setDisponible_fisico(false);
 		}
-		
-		boolean valor = libro.isDisponible_fisico();
-		System.out.println(valor);
 		
 		libroService.save(libro);
 		status.setComplete();

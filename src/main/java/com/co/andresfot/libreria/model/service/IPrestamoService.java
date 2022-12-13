@@ -9,7 +9,6 @@ import com.co.andresfot.libreria.model.entity.Prestamo;
 
 public interface IPrestamoService {
 
-	/* Prestamo */
 	public List<Prestamo> findAll();
 	
 	public Page<Prestamo> findAllPaginable(Pageable pageable);

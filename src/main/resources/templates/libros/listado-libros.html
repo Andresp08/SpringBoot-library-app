@@ -34,7 +34,6 @@
 							<td th:text="${libro.titulo}">Titulo</td>
 							<td th:text="${libro.editorial}">Editorial</td>
 							<td th:text="${libro.ISBN}">ISBN</td>
-							<!--<td th:text="${libro.disponible_fisico}">Disponible</td>-->
 							<td th:text="${libro.disponible_fisico} ? 'Si' : 'No'"></td>
 							<td sec:authorize="hasRole('ROLE_ADMIN')"><a
 								class="btn btn-warning"

@@ -15,7 +15,7 @@ public class AutorServiceImpl implements IAutorService {
 
 	@Autowired
 	private IAutorDao autorDao;
-	
+
 	@Override
 	public List<Autor> findAll() {
 		return (List<Autor>) autorDao.findAll();
@@ -40,5 +40,4 @@ public class AutorServiceImpl implements IAutorService {
 	public void delete(Long id) {
 		autorDao.deleteById(id);
 	}
-
 }

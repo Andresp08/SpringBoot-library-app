@@ -5,6 +5,11 @@ body{
 	min-height: 100vh;
 }
 
+input[type=checkbox] {
+    transform: scale(1.5);
+    accent-color: #FD841F;
+}
+
 footer {
    position: absolute;
    bottom: 0;

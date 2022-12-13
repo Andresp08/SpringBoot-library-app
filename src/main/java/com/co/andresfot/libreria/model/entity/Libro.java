@@ -1,7 +1,6 @@
 package com.co.andresfot.libreria.model.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -41,8 +40,8 @@ public class Libro implements Serializable {
 	@JoinColumn(name = "autor_id")
 	private Autor autor;
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "libro_id")
+	@OneToMany(mappedBy = "libro", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	//@JoinColumn(name = "libro_id")
 	private List<Prestamo> prestamos ;
 
 	public int totalPrestamos() {

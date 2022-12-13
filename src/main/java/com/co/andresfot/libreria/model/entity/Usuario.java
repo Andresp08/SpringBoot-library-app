@@ -9,7 +9,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
@@ -39,8 +38,8 @@ public class Usuario implements Serializable {
 	 * @OneToMany(mappedBy = "prestamo", fetch = FetchType.LAZY, cascade =
 	 * CascadeType.ALL)
 	 */
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "usuario_id")
+	@OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	//@JoinColumn(name = "usuario_id")
 	private List<Prestamo> prestamos;
 
 	public Long getId() {
