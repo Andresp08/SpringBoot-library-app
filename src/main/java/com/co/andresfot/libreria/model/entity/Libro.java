@@ -1,6 +1,7 @@
 package com.co.andresfot.libreria.model.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -14,7 +15,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
-
 
 @Entity
 @Table(name = "libro")
@@ -43,7 +43,7 @@ public class Libro implements Serializable {
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "libro_id")
-	private List<Prestamo> prestamos;
+	private List<Prestamo> prestamos ;
 
 	public int totalPrestamos() {
 		return prestamos.size();
@@ -103,6 +103,12 @@ public class Libro implements Serializable {
 
 	public void setPrestamos(List<Prestamo> prestamos) {
 		this.prestamos = prestamos;
+	}
+
+	@Override
+	public String toString() {
+		return "Libro [id=" + id + ", titulo=" + titulo + ", editorial=" + editorial + ", ISBN=" + ISBN
+				+ ", disponible_fisico=" + disponible_fisico + ", autor=" + autor + ", prestamos=" + prestamos + "]";
 	}
 
 }

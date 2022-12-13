@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -42,6 +44,9 @@ public class PrestamoController {
 	@Autowired
 	private ILibroService libroService;
 	
+	@SuppressWarnings("unused")
+	private final Logger log = LoggerFactory.getLogger(getClass());
+	
 	@GetMapping("/lista-prestamos")
 	public String listadoPrestamos(@RequestParam(name = "page", defaultValue = "0") int page,
 			Model model) {
@@ -76,7 +81,7 @@ public class PrestamoController {
 		return "prestamo/nuevo-prestamo";
 	}
 	
-	@PostMapping("/guardar-prestamo")
+	@PostMapping("/crear-prestamo")
 	public String guardarPrestamo(@Valid Prestamo prestamo, BindingResult result, Model model, 
 			SessionStatus status, RedirectAttributes flash) {
 		
@@ -88,10 +93,14 @@ public class PrestamoController {
 			model.addAttribute("prestamo", prestamo);
 			model.addAttribute("usuarios", usuarios);
 			model.addAttribute("libros", libros);
-			
-			System.out.println("Errores ");
-			
+	
 			return "prestamo/nuevo-prestamo";
+		}
+		
+		if(prestamo.getDevuelto()) {
+			prestamo.setDevuelto(true);
+		} else {
+			prestamo.setDevuelto(false);
 		}
 		
 		for (int i = 0; i < libros.size(); i++) {
@@ -102,17 +111,38 @@ public class PrestamoController {
 			prestamo.setUsuario(usuarios.get(i));
 		}
 		
-		if(prestamo.getDevuelto()) {
-			prestamo.setDevuelto(true);
-		} else {
-			prestamo.setDevuelto(false);
-		}
-		
 		prestamoService.save(prestamo);
 		status.setComplete();
 		flash.addFlashAttribute("success", "Prestamo creado con exito!!");
 		
-		return "redirect:/libros/lista-libros";
+		return "redirect:/prestamos/lista-prestamos";
+	}
+	
+	@GetMapping("/editar-prestamo/{id}")
+	public String editarPrestamo(@PathVariable Long id, Model model, RedirectAttributes flash) {
+
+		Prestamo prestamo = null;
+		List<Usuario> usuarios = usuarioService.findAll();
+		List<Libro> libros = libroService.findAll();
+
+		if (id > 0) {
+			prestamo = prestamoService.findOne(id);
+
+			if (prestamo == null) {
+				flash.addFlashAttribute("error", "El prestamo no existe en la BBDD!!");
+				return "redirect:/prestamos/lista-prestamos";
+			}
+		} else {
+			return "redirect:/prestamos/lista-prestamos";
+		}
+		
+		model.addAttribute("titulo", "Editar Prestamo");
+		model.addAttribute("prestamo", prestamo);
+		model.addAttribute("usuarios", usuarios);
+		model.addAttribute("libros", libros);
+		
+
+		return "prestamo/nuevo-prestamo";
 	}
 	
 	@GetMapping("/detalle/{id}")
@@ -128,6 +158,17 @@ public class PrestamoController {
 		model.addAttribute("prestamo", prestamo);
 		
 		return "prestamo/detalle";
+	}
+	
+	@GetMapping("/eliminar-prestamo/{id}")
+	public String eliminarPrestamo(@PathVariable Long id, RedirectAttributes flash) {
+		
+		if (id > 0) {
+			prestamoService.delete(id);
+			flash.addFlashAttribute("success", "Prestamo eliminado con exito");
+		}
+		
+		return "redirect:/prestamos/lista-prestamos";
 	}
 	
 }

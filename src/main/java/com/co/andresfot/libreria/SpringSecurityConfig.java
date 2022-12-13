@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,6 +15,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 import com.co.andresfot.libreria.auth.handler.LoginSuccesHandler;
+import com.co.andresfot.libreria.model.service.JpaUserDetailsService;
 
 @Configuration
 public class SpringSecurityConfig {
@@ -23,6 +25,9 @@ public class SpringSecurityConfig {
 	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private JpaUserDetailsService userDetailsServiceJpa;
 	
 	@Bean //autorización
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
@@ -47,7 +52,13 @@ public class SpringSecurityConfig {
         	
         return http.build();
     }
+	
+	@Autowired
+	public void configurerGlobal(AuthenticationManagerBuilder build) throws Exception{
+		build.userDetailsService(userDetailsServiceJpa).passwordEncoder(passwordEncoder);
+	}
 
+	/*
 	@Bean //configuration global
 	public InMemoryUserDetailsManager inMemoryUserDetailsManager(){
 		
@@ -58,7 +69,7 @@ public class SpringSecurityConfig {
 				.roles("USER").build());
 
 		return new InMemoryUserDetailsManager(userDetailsList);
-	}
+	}*/
 	
 }
 

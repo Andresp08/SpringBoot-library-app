@@ -9,5 +9,5 @@ public interface IUsuarioDao extends PagingAndSortingRepository<Usuario, Long>{
 
 	@Query("SELECT u FROM Usuario u LEFT JOIN u.prestamos p WHERE u.id=?1")
 	public Usuario fetchByIdWithPrestamos(Long id);
-	
+
 }

@@ -1,6 +1,7 @@
 package com.co.andresfot.libreria.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.co.andresfot.libreria.model.dao.IAutorDao;
 import com.co.andresfot.libreria.model.entity.Autor;
 import com.co.andresfot.libreria.model.entity.Libro;
 import com.co.andresfot.libreria.model.service.IAutorService;
@@ -36,7 +38,10 @@ public class LibroController {
 
 	@Autowired
 	private IAutorService autorService;
-
+	
+	@Autowired
+	private IAutorDao autorDao;
+	
 	@GetMapping("/lista-libros")
 	public String listarLibros(@RequestParam(name = "page", defaultValue = "0") int page, Model model) {
 
@@ -72,6 +77,8 @@ public class LibroController {
 			SessionStatus status, RedirectAttributes flash) {
 
 		List<Autor> autores = autorService.findAll();
+		
+		Optional<Autor> autorOptional = autorDao.findById(libro.getAutor().getId());
 
 		if (result.hasErrors()) {
 			model.addAttribute("titulo", "Añadir nuevo Libro");
@@ -79,10 +86,16 @@ public class LibroController {
 			model.addAttribute("autores", autores);
 			return "libros/nuevo-libro";
 		}
+		
+		libro.setAutor(autorOptional.get());
 
-		for (int i = 0; i < autores.size(); i++) {
+		/*for (int i = 0; i < autores.size(); i++) {
 			libro.setAutor(autores.get(i));
-		}
+		}*/
+		
+		/*for (int i = 0; i < autores.size(); i++) {
+			libro.setAutor(autores.get(i));
+		}*/
 		
 		if(libro.isDisponible_fisico()) {
 			libro.setDisponible_fisico(true);

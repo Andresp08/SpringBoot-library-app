@@ -83,4 +83,10 @@ public class Usuario implements Serializable {
 		this.prestamos = prestamos;
 	}
 
+	@Override
+	public String toString() {
+		return "Usuario [id=" + id + ", nombre=" + nombre + ", correo=" + correo + ", direccion=" + direccion
+				+ ", prestamos=" + prestamos + "]";
+	}
+	
 }

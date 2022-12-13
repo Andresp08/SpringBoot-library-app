@@ -17,7 +17,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PastOrPresent;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -31,9 +30,7 @@ public class Prestamo implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@NotNull
 	@Column(name = "fecha_prestamo")
-	@PastOrPresent(message = "La fecha de prestamo no puede ser posterior al día de hoy")
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date fechaPrestamo;
@@ -108,14 +105,6 @@ public class Prestamo implements Serializable{
 	public void setLibro(Libro libro) {
 		this.libro = libro;
 	}
-	
-	/*public void storageValues() {
-		if(devuelto) {
-			setDevuelto(1);
-		} else (devuelto) {
-			setDevuelto(2);
-		}
-	}*/
 
 	@Override
 	public String toString() {
